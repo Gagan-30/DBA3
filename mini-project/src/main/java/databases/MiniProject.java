@@ -5,9 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -366,7 +364,8 @@ public class MiniProject {
     Connection connection = null;
     
     // TODO - add code to connect to the specified database here
-
+      String jdbcURL = "jdbc:postgresql://" + databaseHost + "/" + port + "/" + databaseName;
+      connection = DriverManager.getConnection(jdbcURL, user, password);
     // end TODO
 
     if (connection != null) {
