@@ -229,7 +229,7 @@ public class MiniProject {
                      new BufferedReader(new InputStreamReader(airportFile, StandardCharsets.UTF_8));
 
              // TODO - complete the PreparedStatement with placeholder values
-             PreparedStatement statement = null;
+             PreparedStatement statement = connection.prepareStatement("INSERT INTO delays VALUES (?,?)");
              // end TODO
 
         ) {
