@@ -31,7 +31,20 @@ public class MiniProject {
 
         // TODO - add code to perform the query and return the results
         // - remember to close the statement and result set
+        String sql = "SELECT id, miles " +
+                "FROM routes " +
+                "ORDER BY miles DESC " +
+                "LIMIT 5";
 
+        try (Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql)) {
+
+            while(resultSet.next()) {
+                int routeId = resultSet.getInt("id");
+                int miles = resultSet.getInt("miles");
+                results.put(routeId, miles);
+            }
+        }
         // end TODO
 
         return results;
