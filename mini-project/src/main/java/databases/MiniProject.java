@@ -99,7 +99,22 @@ public class MiniProject {
 
         // TODO - add code to perform the query and return the results
         // - remember to close the statement and result set
+        String sql = "SELECT r.operator, COUNT(*) AS num_delays " +
+                "FROM delays d " +
+                "JOIN routes r ON d.route = r.id " +   // <-- FIXED
+                "GROUP BY r.operator " +
+                "ORDER BY num_delays DESC " +
+                "LIMIT 1";
 
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+
+            while (resultSet.next()) {
+                String operator = resultSet.getString("operator");
+                int delays = resultSet.getInt("num_delays");
+                results.put(operator, delays);
+            }
+        }
         // end TODO
 
         return results;
