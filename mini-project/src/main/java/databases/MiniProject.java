@@ -65,7 +65,20 @@ public class MiniProject {
 
         // TODO - add code to perform the query and return the results
         // - remember to close the statement and result set
+        String sql = "SELECT operator, COUNT(*) AS route_count " +
+                "FROM routes " +
+                "GROUP BY operator " +
+                "ORDER BY route_count DESC " +
+                "LIMIT 3";
+        try (Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql)) {
 
+            while (resultSet.next()) {
+                String operator = resultSet.getString("operator");
+                int count = resultSet.getInt("route_count");
+                results.put(operator, count);
+            }
+        }
         // end TODO
 
         return results;
