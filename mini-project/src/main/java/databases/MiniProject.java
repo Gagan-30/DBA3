@@ -171,7 +171,24 @@ public class MiniProject {
 
         // TODO - add code to perform the query and return the results
         // - remember to close the statement and result set
+        String sql = "SELECT s.name AS station_name, SUM(d.delays) AS total_delays " +
+                "FROM delays d " +
+                "JOIN routes r ON d.route = r.id " +
+                "JOIN stations s ON r.destination = s.code " +
+                "WHERE r.operator = 'Scot Rail' " +
+                "GROUP BY s.name " +
+                "ORDER BY total_delays DESC " +
+                "LIMIT 1";
 
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+
+            while (resultSet.next()) {
+                String stationName = resultSet.getString("station_name");
+                int totalDelays = resultSet.getInt("total_delays");
+                results.put(stationName, totalDelays);
+            }
+        }
         // end TODO
 
         return results;
