@@ -136,7 +136,21 @@ public class MiniProject {
 
         // TODO - add code to perform the query and return the results
         // - remember to close the statement and result set
+        String sql = "SELECT id, operator " +
+                "FROM routes " +
+                "WHERE (origin = 'PAD' OR destination = 'PAD') " +
+                "AND miles < 100 " +
+                "ORDER BY id ASC";
 
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+
+            while (resultSet.next()) {
+                int routeId = resultSet.getInt("id");
+                String operator = resultSet.getString("operator");
+                results.put(routeId, operator);
+            }
+        }
         // end TODO
 
         return results;
